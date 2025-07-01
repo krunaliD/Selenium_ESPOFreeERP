@@ -19,6 +19,8 @@ public class ContactsPageTest extends TestBase{
 	ContactsPage contactsPage;
 	TestUtil testUtil;
 	
+	String sheetName = "contacts";
+	
 	
 	public ContactsPageTest() {
 		super();
@@ -55,17 +57,17 @@ public class ContactsPageTest extends TestBase{
 		contactsPage.selectsContacts("Frederick Devine");
 	}
 	
-//	@DataProvider
-//	public void getContactTestData() {
-//		
-//	}
-	
-	
-	
-	@Test (priority = 4)
-	public void validateCreateContactTest() {
+	@DataProvider
+	public Object[][] getContactTestData() {
+		Object data[][] = testUtil.getContactTestData(sheetName);
+		return data;
+	}
+		
+	@Test (priority = 4, dataProvider = "getContactTestData")
+	public void validateCreateContactTest(String title, String Name, String Surname) {
 		contactsPage.clickNewContact();
-		contactsPage.createNewContact( "Dr.","Test", "Check");
+//		contactsPage.createNewContact( "Dr.","Test", "Check");
+		contactsPage.createNewContact(title, Name, Surname);
 	}
 	
 	@AfterMethod
