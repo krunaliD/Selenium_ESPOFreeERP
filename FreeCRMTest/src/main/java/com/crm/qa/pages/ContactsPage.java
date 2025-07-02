@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.crm.qa.base.TestBase;
+import com.crm.qa.util.TestUtil;
 
 public class ContactsPage extends TestBase {
 	
@@ -24,6 +25,12 @@ public class ContactsPage extends TestBase {
 	
 	@FindBy (xpath="//button[@data-name='save']")
 	WebElement saveContactBtn;
+	
+	@FindBy (xpath = "//a[text()='Contacts']")
+	WebElement backToContactLink;
+	
+	@FindBy (xpath = "//div[@class ='modal-content']//button[text() = 'Cancel']")
+	WebElement cancelBtn;
 	
 //	@FindBy (xpath ="//div[@class='selectize-input items has-options full has-items']")
 	@FindBy(xpath="//div[@data-name='name']//div[contains(@class,'selectize-input') and contains(@class,'has-items')]")
@@ -45,12 +52,17 @@ public class ContactsPage extends TestBase {
 		return contactCheckbox.isSelected();
 	}
 	
-	public void clickNewContact() {
+	public void clickNewContactLink() {
 		createContact.click();
 	}
 	
+	public void clickBackToContactPage() {
+		backToContactLink.click();
+	}
+	
+	
 	public void createNewContact(String title, String ftName, String Surname) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TestUtil.ELEMENT_VISIBLE_WAIT));
 		wait.until(ExpectedConditions.visibilityOf(salutation));
 		salutation.click();
 		
@@ -63,6 +75,19 @@ public class ContactsPage extends TestBase {
 		fName.sendKeys(ftName);
 		lName.sendKeys(Surname);
 		saveContactBtn.click();
+//		testUtil.switchToFrame();
+//			cancelBtn.click();
+		 wait.until(ExpectedConditions.invisibilityOf(saveContactBtn));
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(TestUtil.ELEMENT_VISIBLE_WAIT));
+		wait.until(ExpectedConditions.visibilityOf(backToContactLink));
+	}
+	
+	public boolean checkAllMultipleContactsAdded(String Name, String Surname) {
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(TestUtil.ELEMENT_VISIBLE_WAIT));
+		backToContactLink.click();
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(TestUtil.ELEMENT_VISIBLE_WAIT));
+		WebElement contactAdded = driver.findElement(By.xpath("//a[text()='"+Name+" "+Surname+"']"));
+		return contactAdded.isDisplayed();
 	}
 	
 	

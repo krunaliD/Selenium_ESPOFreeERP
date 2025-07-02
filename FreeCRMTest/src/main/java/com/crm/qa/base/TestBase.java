@@ -9,13 +9,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 
 import com.crm.qa.util.TestUtil;
+import com.crm.qa.util.WebEventListener;
 
 public class TestBase {
 
 	public static WebDriver driver;
 	public static Properties prop;
+//	public static EventFiringDecorator e_driver;
+	public static WebDriverListener eventListener;
 
 
 	public TestBase() {
@@ -44,6 +49,12 @@ public class TestBase {
 		else if (browsername.equals("Safari")) {
 			driver = new SafariDriver();
 		}
+		
+//		e_driver = new EventFiringDecorator(driver);
+		eventListener = new WebEventListener(); //creating object of EventListerHandler to register it with EventFiringWebDriver
+		//e_driver.register(eventListener);
+//		driver = e_driver;
+		driver = new EventFiringDecorator(eventListener).decorate(driver);
 		
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();

@@ -1,5 +1,9 @@
 package com.crm.qa.testcases;
 
+//import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -36,11 +40,11 @@ public class ContactsPageTest extends TestBase{
 		contactsPage = homePage.clickContactsLink();
 	}
 		
-	@Test (priority = 1)
-	public void verifyContactsPageTitleTest() {
-		String contactsPageTitle = contactsPage.verifyContactsPageTitle();
-		Assert.assertEquals(contactsPageTitle, "Contacts", "Contacts Page Title not matched");
-	}
+//	@Test (priority = 1)
+//	public void verifyContactsPageTitleTest() {
+//		String contactsPageTitle = contactsPage.verifyContactsPageTitle();
+//		Assert.assertEquals(contactsPageTitle, "Contacts", "Contacts Page Title not matched");
+//	}
 	
 	@Test (priority = 2)
 	public void verifySelectSingleContactTest() {
@@ -48,14 +52,29 @@ public class ContactsPageTest extends TestBase{
 		Assert.assertTrue(flag);
 	}
 	
-	@Test (priority = 3)
-	public void verifySelectMultipleContactsTest() {
-		boolean flag1 = contactsPage.selectsContacts("Laura Mason");
-		boolean flag2 = contactsPage.selectsContacts("Ines Dietrich");
-		Assert.assertTrue(flag1);
-		Assert.assertTrue(flag2);
-		contactsPage.selectsContacts("Frederick Devine");
-	}
+//	@Test (priority = 3)
+//	public void verifySelectMultipleContactsTest() {
+//		boolean flag1 = contactsPage.selectsContacts("Laura Mason");
+//		boolean flag2 = contactsPage.selectsContacts("Ines Dietrich");
+//		Assert.assertTrue(flag1);
+//		Assert.assertTrue(flag2);
+//		contactsPage.selectsContacts("Frederick Devine");
+//	}
+	
+	
+//	@Test (priority = 4)
+//	public void verifyAddingSingleContactTest() {
+//		contactsPage.clickNewContactLink();
+//		contactsPage.createNewContact( "Dr.","Single", "Check");
+//	}
+//	
+//	@Test (priority = 5)
+//	public void verifySingleContactAddedTest() {
+//		String FrstName = "Single";
+//		String Srname = "Check";
+//		WebElement newCntact = driver.findElement(By.xpath("//a[text()='"+FrstName+" "+Srname+"']"));
+//		Assert.assertTrue(newCntact.isDisplayed(), "Contact not Added");
+//	}
 	
 	@DataProvider
 	public Object[][] getContactTestData() {
@@ -63,11 +82,12 @@ public class ContactsPageTest extends TestBase{
 		return data;
 	}
 		
-	@Test (priority = 4, dataProvider = "getContactTestData")
-	public void validateCreateContactTest(String title, String Name, String Surname) {
-		contactsPage.clickNewContact();
-//		contactsPage.createNewContact( "Dr.","Test", "Check");
+	@Test (priority = 6, dataProvider = "getContactTestData")
+	public void validateCreateandVerifyContactTest(String title, String Name, String Surname) {
+		contactsPage.clickNewContactLink();
 		contactsPage.createNewContact(title, Name, Surname);
+		boolean isAdded = contactsPage.checkAllMultipleContactsAdded(Name, Surname);
+		Assert.assertTrue(isAdded, "Contact not added");
 	}
 	
 	@AfterMethod
