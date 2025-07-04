@@ -2,6 +2,10 @@
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name= "FREE CRM ERP Automation Test Suite">
+
+<listeners>
+		<listener class-name="com.crm.qa.ExtentReportListener.TestcaseExtentReporter" />
+	</listeners>
 <test name = "FREE CRM ERP Testcases">
 <classes>
 <class name="com.crm.qa.testcases.LoginPageTest"></class>

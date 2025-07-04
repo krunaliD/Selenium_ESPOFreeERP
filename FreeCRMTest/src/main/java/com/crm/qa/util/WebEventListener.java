@@ -1,6 +1,8 @@
 package com.crm.qa.util;
 
 import org.openqa.selenium.support.events.WebDriverListener;
+import org.testng.ITestResult;
+
 import com.crm.qa.base.TestBase;
 
 import java.io.IOException;
@@ -53,10 +55,10 @@ public class WebEventListener extends TestBase implements WebDriverListener {
 		System.out.println("Navigated forward to next page");
 	}
 
-	public void onException(Throwable error, WebDriver driver) {
+	public void onException(Throwable error, WebDriver driver, ITestResult result) {
 		System.out.println("Exception occured: " + error);
 		try {
-			TestUtil.takeScreenshotAtEndOfTest();
+			TestUtil.takeScreenshotAtEndOfTest(result.getName());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

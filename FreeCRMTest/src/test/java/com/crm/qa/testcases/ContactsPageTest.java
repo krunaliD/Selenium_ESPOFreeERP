@@ -1,10 +1,13 @@
 package com.crm.qa.testcases;
 
+import java.io.IOException;
+
 //import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -31,35 +34,36 @@ public class ContactsPageTest extends TestBase{
 	}
 	
 	@BeforeMethod
-	public void setUp() {
+	public void setUp() throws InterruptedException{
 		initialization();
 		testUtil = new TestUtil(); 
 		contactsPage = new ContactsPage();
 		loginPage = new LoginPage();
 		homePage = loginPage.login();	
+		
 		contactsPage = homePage.clickContactsLink();
 	}
 		
-//	@Test (priority = 1)
-//	public void verifyContactsPageTitleTest() {
-//		String contactsPageTitle = contactsPage.verifyContactsPageTitle();
-//		Assert.assertEquals(contactsPageTitle, "Contacts", "Contacts Page Title not matched");
-//	}
-	
-	@Test (priority = 2)
-	public void verifySelectSingleContactTest() {
-		boolean flag = contactsPage.selectsContacts("Frederick Devine");
-		Assert.assertTrue(flag);
+	@Test (priority = 1)
+	public void verifyContactsPageTitleTest() {
+		String contactsPageTitle = contactsPage.verifyContactsPageTitle();
+		Assert.assertEquals(contactsPageTitle, "Contacts", "Contacts Page Title not matched");
 	}
 	
-//	@Test (priority = 3)
-//	public void verifySelectMultipleContactsTest() {
-//		boolean flag1 = contactsPage.selectsContacts("Laura Mason");
-//		boolean flag2 = contactsPage.selectsContacts("Ines Dietrich");
-//		Assert.assertTrue(flag1);
-//		Assert.assertTrue(flag2);
-//		contactsPage.selectsContacts("Frederick Devine");
+//	@Test (priority = 2)
+//	public void verifySelectSingleContactTest() {
+//		boolean flag = contactsPage.selectsContacts("Frederick Devine");
+//		Assert.assertTrue(flag);
 //	}
+	
+	@Test (priority = 3)
+	public void verifySelectMultipleContactsTest() {
+		boolean flag1 = contactsPage.selectsContacts("Laura Mason");
+		boolean flag2 = contactsPage.selectsContacts("Ines Dietrich");
+		Assert.assertTrue(flag1);
+		Assert.assertTrue(flag2);
+		contactsPage.selectsContacts("Frederick Devine");
+	}
 	
 	
 //	@Test (priority = 4)
@@ -91,8 +95,14 @@ public class ContactsPageTest extends TestBase{
 	}
 	
 	@AfterMethod
-	public void tearDown() {
+	public void tearDown(ITestResult result) {
+		if (ITestResult.FAILURE == result.getStatus()) {
+			try {
+			TestUtil.takeScreenshotAtEndOfTest(result.getName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		driver.quit();
 	}
-
 }
