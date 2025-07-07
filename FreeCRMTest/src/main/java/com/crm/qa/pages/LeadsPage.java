@@ -78,6 +78,48 @@ public class LeadsPage extends TestBase {
 	@FindBy (xpath = "//a[@data-action = 'applyFilters']//span[text()='Reset']")
 	WebElement resetBtn;
 	
+	@FindBy (xpath = "//ul[@class = 'dropdown-menu pull-right list-row-dropdown-menu']//a[@data-id='5f61b8dce14ef6b45'][@data-action='quickView']")
+//	dropdown-menu pull-right list-row-dropdown-menu
+	WebElement viewOption;
+	
+//	@FindBy (xpath = "//a[@data-action = 'quickEdit']")
+//	//a[text()='Charles Patry']//parent::td[@data-name='name']//following-sibling::ul[@type='button']//child::a[@data-action = 'quickEdit']
+//	WebElement editOption;
+	
+	@FindBy (xpath = "//a[@data-action = 'quickRemove']")
+	WebElement removeOption;
+	
+	@FindBy (xpath = "//div[@class = 'modal-content']//a[@class = 'close']")
+	WebElement viewCrossIcon;
+	
+	@FindBy (xpath = "//button[@title = 'Next Entry']")
+	WebElement nextLeadArrow;
+	
+	@FindBy (xpath = "//div[@data-name = 'name'][@class='field']")
+	WebElement leadNameOnNavigation;
+	
+	@FindBy (xpath = "//button[@title = 'Previous Entry']")
+	WebElement previousLeadArrow;
+	
+	@FindBy (xpath = "//button[@data-name = 'fullForm']")
+	WebElement fullFormBtn;
+	
+	@FindBy (xpath = "//button[@data-name ='edit']")
+	WebElement editBtn;
+	
+	@FindBy (xpath = "//button[@data-action = 'cancelEdit']")
+	WebElement cancelEditBtn;
+	
+	@FindBy (xpath = "//div[@data-name='teams']//child::span[@class = 'input-group-btn']")
+	WebElement assignTeamDropdown;
+	
+	@FindBy (xpath = "//div[@class='selectize-control form-control main-element single plugin-espo_select']//child::div[@class='item']")
+	WebElement assignSourceToLeadtextbox;
+	
+	@FindBy (xpath = "//button[@data-name='save']")
+	WebElement saveLeadEditBtn;
+	
+	
 	public LeadsPage() {
 		PageFactory.initElements(driver, this);
 	}
@@ -147,5 +189,86 @@ public class LeadsPage extends TestBase {
 		}
 		return unfilteredName;
 	}
+	
+	public void viewLeadCard(String name) {
+		
+
+		WebElement dropdownArrow = driver.findElement(By.xpath("//a[text() = '"+name+"']//parent::td[@data-name='name']"
+				+ "//following-sibling::td[@data-name ='buttons']"));
+		//a[text()= 'Antonio Ricci']//parent::td[@data-name='name']//following-sibling::td[@data-name ='buttons']
+		//a[text() = 'Antonio Ricci']//parent::td[@data-name='name']//following-sibling::td[@data-name ='buttons']
+		dropdownArrow.click();
+		viewOption.click();
+		
+		TestUtil.elementClickableWait(viewCrossIcon);
+		viewCrossIcon.click();
+		
+		dropdownArrow.click();
+		viewOption.click();
+	}
+	
+	public String nextArrowLead() {
+		TestUtil.elementClickableWait(nextLeadArrow);                                  //wait for clicking next arrow
+		nextLeadArrow.click();
+		
+		String nextLeadName = leadNameOnNavigation.getText().trim();                       //for assertion
+		return nextLeadName;
+	}
+	
+	public String previousArrowLead() {
+		TestUtil.elementClickableWait(previousLeadArrow);                                //wait for clicking previous arrow
+		previousLeadArrow.click();
+		
+		String previousLeadName = leadNameOnNavigation.getText().trim();                         //for assertion
+		return previousLeadName;
+	}
+	
+	public void viewFullFormLead() {
+		TestUtil.elementClickableWait(fullFormBtn);
+		fullFormBtn.click();
+	}
+	
+	public void editLead() {		
+		editBtn.click();
+		cancelEditBtn.click();
+	}
+	
+	public void editLeadsCard(String name) {
+		
+		WebElement dropdownArrow = driver.findElement(By.xpath("//a[text() = '"+name+"']//parent::td[@data-name='name']"
+				+ "//following-sibling::td[@data-name ='buttons']"));
+		dropdownArrow.click();
+		
+		WebElement editOption = driver.findElement(By.xpath("//a[text()='"+name+"']//parent::td[@data-name='name']//following-sibling::td[@data-name='buttons']//child::a[@data-action = 'quickEdit']"));
+		editOption.click();
+		
+		TestUtil.visibleWait(viewCrossIcon);
+		viewCrossIcon.click();
+		
+		dropdownArrow.click();
+		editOption.click();
+		
+		
+	}
+	
+	public void updateAssignedTeamOfLead(String team) {
+		
+		assignTeamDropdown.click();
+		
+		WebElement assignTeamToLeadtextbox = driver.findElement(By.xpath("//a[text()='"+team+"']"));
+		assignTeamToLeadtextbox.click();
+		
+	}
+	public void updateSourceOfLead(String source) {
+		assignSourceToLeadtextbox.click();
+		WebElement sourceNameofLead = driver.findElement(By.xpath("//div[@data-value='"+source+"'][@class='option']"));
+		sourceNameofLead.click();
+	}
+	
+	public void saveUpdatesOfLeads() {
+		saveLeadEditBtn.click();
+	}
+	
+	
 	
 }

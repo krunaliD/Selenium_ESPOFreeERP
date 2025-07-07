@@ -6,8 +6,8 @@
       <class name="com.crm.qa.testcases.LeadsPageTest">
         <methods>
           <include name="start"/>
+          <include name="verifyEditAndSaveLeads"/>
           <include name="packUp"/>
-          <include name="verifyFilterLeadsTest"/>
         </methods>
       </class> <!-- com.crm.qa.testcases.LeadsPageTest -->
     </classes>

@@ -75,9 +75,24 @@ public class TestUtil extends TestBase{
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Xpath)));
 	}
 	
-	public static void visibleWait(WebElement element) {
+	public static void visibleWait(WebElement element) {                                 // by webElement
 		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-//		wait.until(ExpectedConditions.visibilityOfElementLocated((element)));
+		wait.until(ExpectedConditions.visibilityOf((element)));
+	}
+	
+	public static void elementClickableWait(WebElement element) {                          //webElement
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+	}
+	
+	public static void visibleWait(By locator) {                                     // by locator
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
+	public static void elementClickableWait(By locator) {                       // by locator
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
 
 }

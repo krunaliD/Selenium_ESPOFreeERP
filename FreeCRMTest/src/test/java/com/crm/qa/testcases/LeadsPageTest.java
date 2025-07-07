@@ -1,10 +1,12 @@
 package com.crm.qa.testcases;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -41,11 +43,11 @@ public class LeadsPageTest extends TestBase{
 		leadsPage = new LeadsPage();		
 	}
 	
-//	@Test (priority = 1)
-//	public void verifyLeadsCheckedTest() {
-//		boolean check = leadsPage.selectLeadsCheckbox("Timothy Harris");
-//		Assert.assertTrue(check);
-//	}
+	@Test (priority = 1)
+	public void verifyLeadsCheckedTest() {
+		boolean check = leadsPage.selectLeadsCheckbox("Timothy Harris");
+		Assert.assertTrue(check);
+	}
 	
 	@Test (priority = 2)
 	public void verifyFilterLeadsTest() {
@@ -71,11 +73,42 @@ public class LeadsPageTest extends TestBase{
 			    System.out.println("Filter results correctly reset ");
 			}
 
-		
 	}
 
 	
+	@Test (priority = 3)
+	public void verifyLeadCardExpandTest() {
+		leadsPage.viewLeadCard("Antonio Ricci");
+		
+		String nextLeadName = leadsPage.nextArrowLead();
+		Assert.assertNotEquals(nextLeadName, "Mr. Antonio Ricci", "Not navigated to next page");
+		
+		String previousLeadName = leadsPage.previousArrowLead();
+		Assert.assertEquals(previousLeadName,"Mr. Antonio Ricci","Not navigated to previous page");
+		
+		leadsPage.viewFullFormLead();
+		
+		String nextLeadNameFull = leadsPage.nextArrowLead();
+//		System.out.println(nextLeadNameFull);
+		Assert.assertNotEquals(nextLeadNameFull, "Mr. Antonio Ricci","Not navigated to next page");
+		
+		String previousLeadNameFull = leadsPage.previousArrowLead();
+//		System.out.println(previousLeadNameFull);
+		Assert.assertEquals(previousLeadNameFull,"Mr. Antonio Ricci","Not navigated to previous page");
+		
+	}
 	
+	@Test (priority = 4)
+	public void verifyEditAndSaveLeads() {
+		leadsPage.editLeadsCard("Charles Patry");
+		
+		leadsPage.updateAssignedTeamOfLead("Sales");
+		
+		leadsPage.updateSourceOfLead("Campaign");
+		
+		leadsPage.saveUpdatesOfLeads();
+		
+	}
 	
 	@AfterMethod
 	public void packUp(ITestResult result) {
