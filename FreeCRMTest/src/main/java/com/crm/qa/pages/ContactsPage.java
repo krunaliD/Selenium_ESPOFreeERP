@@ -42,7 +42,10 @@ public class ContactsPage extends TestBase {
 	}
 	
 	public String verifyContactsPageTitle() {
-		return driver.getTitle();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.titleIs("Contacts"));
+		String title = driver.getTitle();
+		return title;
 	}
 	
 	public boolean selectsContacts(String name) {

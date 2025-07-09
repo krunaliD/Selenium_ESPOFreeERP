@@ -4,8 +4,6 @@ import java.io.IOException;
 
 //import java.time.Duration;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
