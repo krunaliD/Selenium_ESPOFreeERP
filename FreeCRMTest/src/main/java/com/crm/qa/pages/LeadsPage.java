@@ -7,14 +7,10 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.internal.WebElementToJsonConverter;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.annotations.Listeners;
-
 import com.crm.qa.base.TestBase;
 import com.crm.qa.util.TestUtil;
 
@@ -156,6 +152,7 @@ public class LeadsPage extends TestBase {
 		
 		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(TestUtil.ELEMENT_VISIBLE_WAIT));
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//td[@data-name='assignedUser']//a"))); //wait for element to be visible
+		
 		List<String> leadname = new ArrayList<String>();
 		List<WebElement> filteredNameElements = driver.findElements(By.xpath("//td[@data-name='assignedUser']//a"));
 		//td[@data-name='assignedUser']//a[@title='Jack Adams' ]

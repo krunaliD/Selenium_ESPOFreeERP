@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.crm.qa.testcases.LeadsPageTest">
+      <class name="com.crm.qa.testcases.OpportunitiesPageTest">
         <methods>
-          <include name="start"/>
-          <include name="verifyEditAndSaveLeads"/>
           <include name="packUp"/>
+          <include name="startUp"/>
+          <include name="verifyCreateOpportunityTest"/>
         </methods>
-      </class> <!-- com.crm.qa.testcases.LeadsPageTest -->
+      </class> <!-- com.crm.qa.testcases.OpportunitiesPageTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

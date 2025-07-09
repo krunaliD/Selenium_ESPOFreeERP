@@ -85,6 +85,7 @@ public class ContactsPage extends TestBase {
 	public boolean checkAllMultipleContactsAdded(String Name, String Surname) {
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(TestUtil.ELEMENT_VISIBLE_WAIT));
 		backToContactLink.click();
+		
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(TestUtil.ELEMENT_VISIBLE_WAIT));
 		WebElement contactAdded = driver.findElement(By.xpath("//a[text()='"+Name+" "+Surname+"']"));
 		return contactAdded.isDisplayed();

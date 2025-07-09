@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.EncryptedDocumentException;
@@ -75,9 +76,19 @@ public class TestUtil extends TestBase{
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Xpath)));
 	}
 	
+	public static void presenceWait(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+	}
+	
 	public static void visibleWait(WebElement element) {                                 // by webElement
 		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOf((element)));
+	}
+	
+	public static void visibleWait(List<WebElement> elements) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfAllElements(elements));
 	}
 	
 	public static void elementClickableWait(WebElement element) {                          //webElement
