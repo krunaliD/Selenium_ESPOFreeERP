@@ -1,8 +1,12 @@
 package com.crm.qa.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.crm.qa.base.TestBase;
 
@@ -30,6 +34,8 @@ public class LoginPage extends TestBase{
 	}
 	
 	public boolean validateCRMImage() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOf(crmLogo));
 		return crmLogo.isDisplayed();
 	}
 	public HomePage login() {
